@@ -1,3 +1,26 @@
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -7,66 +30,73 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-System.register("Preprocessors", [], function (exports_1, context_1) {
+define("Preprocessors", ["require", "exports"], function (require, exports) {
     "use strict";
-    var abbreviationMap;
-    var __moduleName = context_1 && context_1.id;
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.separateLetterFromNumber = exports.expandNumbers = exports.numberToWords = exports.expandAbbreviations = exports.removeEmails = exports.urlToPlaceholder = exports.shortenRepeatedChars = exports.replaceAccentedChars = exports.removeSpecialCharacters = exports.removeNumbers = exports.trimWhitespace = exports.convertToLowercase = exports.removeConsecutiveSpaces = exports.removeNonASCII = exports.bulkPreprocess = exports.chainPreprocessors = void 0;
     function chainPreprocessors(str, preprocessors) {
         for (let preprocessor of preprocessors) {
             str = preprocessor(str);
         }
         return str;
     }
-    exports_1("chainPreprocessors", chainPreprocessors);
+    exports.chainPreprocessors = chainPreprocessors;
     function bulkPreprocess(strings, preprocessors) {
         return strings.map(s => chainPreprocessors(s, preprocessors));
     }
-    exports_1("bulkPreprocess", bulkPreprocess);
+    exports.bulkPreprocess = bulkPreprocess;
     function removeNonASCII(str) {
         return str.replace(/[^\x00-\x7F]/g, "");
     }
-    exports_1("removeNonASCII", removeNonASCII);
+    exports.removeNonASCII = removeNonASCII;
     function removeConsecutiveSpaces(str) {
         return str.replace(/\s+/g, ' ');
     }
-    exports_1("removeConsecutiveSpaces", removeConsecutiveSpaces);
+    exports.removeConsecutiveSpaces = removeConsecutiveSpaces;
     function convertToLowercase(str) {
         return str.toLowerCase();
     }
-    exports_1("convertToLowercase", convertToLowercase);
+    exports.convertToLowercase = convertToLowercase;
     function trimWhitespace(str) {
         return str.trim();
     }
-    exports_1("trimWhitespace", trimWhitespace);
+    exports.trimWhitespace = trimWhitespace;
     function removeNumbers(str) {
         return str.replace(/[0-9]/g, '');
     }
-    exports_1("removeNumbers", removeNumbers);
+    exports.removeNumbers = removeNumbers;
     function removeSpecialCharacters(str) {
         return str.replace(/[^a-zA-Z0-9\s]/g, '');
     }
-    exports_1("removeSpecialCharacters", removeSpecialCharacters);
+    exports.removeSpecialCharacters = removeSpecialCharacters;
     function replaceAccentedChars(str) {
         return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     }
-    exports_1("replaceAccentedChars", replaceAccentedChars);
+    exports.replaceAccentedChars = replaceAccentedChars;
     function shortenRepeatedChars(str) {
         return str.replace(/(\w)\1+/g, '$1');
     }
-    exports_1("shortenRepeatedChars", shortenRepeatedChars);
+    exports.shortenRepeatedChars = shortenRepeatedChars;
     function urlToPlaceholder(str) {
         return str.replace(/https?:\/\/[^\s]+/g, '[URL]');
     }
-    exports_1("urlToPlaceholder", urlToPlaceholder);
+    exports.urlToPlaceholder = urlToPlaceholder;
     function removeEmails(str) {
         return str.replace(/[\w.-]+@[\w.-]+\.\w+/g, '');
     }
-    exports_1("removeEmails", removeEmails);
+    exports.removeEmails = removeEmails;
+    const abbreviationMap = {
+        "dr.": "doctor",
+        "mr.": "mister",
+        "mrs.": "missus",
+        "ms.": "miss",
+        // Add more as needed
+    };
     function expandAbbreviations(str) {
         const regex = new RegExp(Object.keys(abbreviationMap).join("|"), "gi");
         return str.replace(regex, (match) => abbreviationMap[match.toLowerCase()]);
     }
-    exports_1("expandAbbreviations", expandAbbreviations);
+    exports.expandAbbreviations = expandAbbreviations;
     function numberToWords(num) {
         if (num === 0)
             return 'zero';
@@ -87,12 +117,12 @@ System.register("Preprocessors", [], function (exports_1, context_1) {
         }
         return helper(num).trim();
     }
-    exports_1("numberToWords", numberToWords);
+    exports.numberToWords = numberToWords;
     function expandNumbers(str) {
         const regex = /\b\d+\b/g; // Find standalone numbers
         return str.replace(regex, (match) => numberToWords(parseInt(match)));
     }
-    exports_1("expandNumbers", expandNumbers);
+    exports.expandNumbers = expandNumbers;
     function separateLetterFromNumber(str) {
         // Insert space between letter and number if they are adjacent
         let result = str.replace(/([a-zA-Z])(\d)/g, '$1 $2');
@@ -100,24 +130,17 @@ System.register("Preprocessors", [], function (exports_1, context_1) {
         result = result.replace(/(\d)([a-zA-Z])/g, '$1 $2');
         return result;
     }
-    exports_1("separateLetterFromNumber", separateLetterFromNumber);
-    return {
-        setters: [],
-        execute: function () {
-            abbreviationMap = {
-                "dr.": "doctor",
-                "mr.": "mister",
-                "mrs.": "missus",
-                "ms.": "miss",
-                // Add more as needed
-            };
-        }
-    };
+    exports.separateLetterFromNumber = separateLetterFromNumber;
 });
-System.register("Tensorlex", ["@tensorflow/tfjs"], function (exports_2, context_2) {
+define("Tensorlex", ["require", "exports", "@tensorflow/tfjs"], function (require, exports, tf) {
     "use strict";
-    var tf, MAX_STRING_LENGTH, VOCAB_SIZE, EMBEDDING_DIM, globalModel;
-    var __moduleName = context_2 && context_2.id;
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.trainModel = exports.predictMatches = exports.cosineSimilarity = exports.createEmbeddingModel = exports.loadModel = exports.saveModel = void 0;
+    tf = __importStar(tf);
+    const MAX_STRING_LENGTH = 20;
+    const VOCAB_SIZE = 128;
+    const EMBEDDING_DIM = 8;
+    let globalModel = null;
     function saveModel(path) {
         return __awaiter(this, void 0, void 0, function* () {
             if (!globalModel) {
@@ -127,7 +150,7 @@ System.register("Tensorlex", ["@tensorflow/tfjs"], function (exports_2, context_
             yield globalModel.save(`file://${path}`);
         });
     }
-    exports_2("saveModel", saveModel);
+    exports.saveModel = saveModel;
     function loadModel(path) {
         return __awaiter(this, void 0, void 0, function* () {
             const model = yield tf.loadLayersModel(`file://${path}`);
@@ -139,7 +162,7 @@ System.register("Tensorlex", ["@tensorflow/tfjs"], function (exports_2, context_
             }
         });
     }
-    exports_2("loadModel", loadModel);
+    exports.loadModel = loadModel;
     function createEmbeddingModel() {
         const model = tf.sequential();
         model.add(tf.layers.embedding({
@@ -151,7 +174,7 @@ System.register("Tensorlex", ["@tensorflow/tfjs"], function (exports_2, context_
         model.add(tf.layers.dense({ units: 32, activation: 'relu' }));
         return model;
     }
-    exports_2("createEmbeddingModel", createEmbeddingModel);
+    exports.createEmbeddingModel = createEmbeddingModel;
     // export function cosineSimilarity(vectors: tf.Tensor[]): tf.Tensor {
     //     const [a, b] = vectors;
     //     const dotProduct = tf.sum(tf.mul(a, b));
@@ -166,7 +189,7 @@ System.register("Tensorlex", ["@tensorflow/tfjs"], function (exports_2, context_
         const normB = tf.sqrt(tf.sum(tf.square(b)));
         return dotProduct.div(normA.mul(normB));
     }
-    exports_2("cosineSimilarity", cosineSimilarity);
+    exports.cosineSimilarity = cosineSimilarity;
     function predictMatches(query, candidates, cutoffThreshold = 0.75) {
         return __awaiter(this, void 0, void 0, function* () {
             const embeddingModel = globalModel || createEmbeddingModel();
@@ -193,7 +216,7 @@ System.register("Tensorlex", ["@tensorflow/tfjs"], function (exports_2, context_
             return { matches, nonMatches };
         });
     }
-    exports_2("predictMatches", predictMatches);
+    exports.predictMatches = predictMatches;
     function stringToIntArray(str) {
         const arr = [];
         for (let i = 0; i < str.length; i++) {
@@ -221,58 +244,33 @@ System.register("Tensorlex", ["@tensorflow/tfjs"], function (exports_2, context_
             batchSize: config.batchSize
         });
     }
-    exports_2("trainModel", trainModel);
-    return {
-        setters: [
-            function (tf_1) {
-                tf = tf_1;
-            }
-        ],
-        execute: function () {
-            MAX_STRING_LENGTH = 20;
-            VOCAB_SIZE = 128;
-            EMBEDDING_DIM = 8;
-            globalModel = null;
-        }
-    };
+    exports.trainModel = trainModel;
 });
-System.register("index", ["Tensorlex", "Preprocessors"], function (exports_3, context_3) {
+define("index", ["require", "exports", "Tensorlex", "Preprocessors"], function (require, exports, Tensorlex_1, Preprocessors_1) {
     "use strict";
-    var Tensorlex_1, Preprocessors_1;
-    var __moduleName = context_3 && context_3.id;
-    return {
-        setters: [
-            function (Tensorlex_1_1) {
-                Tensorlex_1 = Tensorlex_1_1;
-            },
-            function (Preprocessors_1_1) {
-                Preprocessors_1 = Preprocessors_1_1;
-            }
-        ],
-        execute: function () {
-            exports_3("cosineSimilarity", Tensorlex_1.cosineSimilarity);
-            exports_3("createEmbeddingModel", Tensorlex_1.createEmbeddingModel);
-            exports_3("loadModel", Tensorlex_1.loadModel);
-            exports_3("predictMatches", Tensorlex_1.predictMatches);
-            exports_3("saveModel", Tensorlex_1.saveModel);
-            exports_3("trainModel", Tensorlex_1.trainModel);
-            exports_3("bulkPreprocess", Preprocessors_1.bulkPreprocess);
-            exports_3("chainPreprocessors", Preprocessors_1.chainPreprocessors);
-            exports_3("convertToLowercase", Preprocessors_1.convertToLowercase);
-            exports_3("expandAbbreviations", Preprocessors_1.expandAbbreviations);
-            exports_3("expandNumbers", Preprocessors_1.expandNumbers);
-            exports_3("numberToWords", Preprocessors_1.numberToWords);
-            exports_3("removeConsecutiveSpaces", Preprocessors_1.removeConsecutiveSpaces);
-            exports_3("removeEmails", Preprocessors_1.removeEmails);
-            exports_3("removeNonASCII", Preprocessors_1.removeNonASCII);
-            exports_3("removeNumbers", Preprocessors_1.removeNumbers);
-            exports_3("removeSpecialCharacters", Preprocessors_1.removeSpecialCharacters);
-            exports_3("replaceAccentedChars", Preprocessors_1.replaceAccentedChars);
-            exports_3("separateLetterFromNumber", Preprocessors_1.separateLetterFromNumber);
-            exports_3("shortenRepeatedChars", Preprocessors_1.shortenRepeatedChars);
-            exports_3("trimWhitespace", Preprocessors_1.trimWhitespace);
-            exports_3("urlToPlaceholder", Preprocessors_1.urlToPlaceholder);
-        }
-    };
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.urlToPlaceholder = exports.trimWhitespace = exports.shortenRepeatedChars = exports.separateLetterFromNumber = exports.replaceAccentedChars = exports.removeSpecialCharacters = exports.removeNumbers = exports.removeNonASCII = exports.removeEmails = exports.removeConsecutiveSpaces = exports.numberToWords = exports.expandNumbers = exports.expandAbbreviations = exports.convertToLowercase = exports.chainPreprocessors = exports.bulkPreprocess = exports.trainModel = exports.saveModel = exports.predictMatches = exports.loadModel = exports.createEmbeddingModel = exports.cosineSimilarity = void 0;
+    Object.defineProperty(exports, "cosineSimilarity", { enumerable: true, get: function () { return Tensorlex_1.cosineSimilarity; } });
+    Object.defineProperty(exports, "createEmbeddingModel", { enumerable: true, get: function () { return Tensorlex_1.createEmbeddingModel; } });
+    Object.defineProperty(exports, "loadModel", { enumerable: true, get: function () { return Tensorlex_1.loadModel; } });
+    Object.defineProperty(exports, "predictMatches", { enumerable: true, get: function () { return Tensorlex_1.predictMatches; } });
+    Object.defineProperty(exports, "saveModel", { enumerable: true, get: function () { return Tensorlex_1.saveModel; } });
+    Object.defineProperty(exports, "trainModel", { enumerable: true, get: function () { return Tensorlex_1.trainModel; } });
+    Object.defineProperty(exports, "bulkPreprocess", { enumerable: true, get: function () { return Preprocessors_1.bulkPreprocess; } });
+    Object.defineProperty(exports, "chainPreprocessors", { enumerable: true, get: function () { return Preprocessors_1.chainPreprocessors; } });
+    Object.defineProperty(exports, "convertToLowercase", { enumerable: true, get: function () { return Preprocessors_1.convertToLowercase; } });
+    Object.defineProperty(exports, "expandAbbreviations", { enumerable: true, get: function () { return Preprocessors_1.expandAbbreviations; } });
+    Object.defineProperty(exports, "expandNumbers", { enumerable: true, get: function () { return Preprocessors_1.expandNumbers; } });
+    Object.defineProperty(exports, "numberToWords", { enumerable: true, get: function () { return Preprocessors_1.numberToWords; } });
+    Object.defineProperty(exports, "removeConsecutiveSpaces", { enumerable: true, get: function () { return Preprocessors_1.removeConsecutiveSpaces; } });
+    Object.defineProperty(exports, "removeEmails", { enumerable: true, get: function () { return Preprocessors_1.removeEmails; } });
+    Object.defineProperty(exports, "removeNonASCII", { enumerable: true, get: function () { return Preprocessors_1.removeNonASCII; } });
+    Object.defineProperty(exports, "removeNumbers", { enumerable: true, get: function () { return Preprocessors_1.removeNumbers; } });
+    Object.defineProperty(exports, "removeSpecialCharacters", { enumerable: true, get: function () { return Preprocessors_1.removeSpecialCharacters; } });
+    Object.defineProperty(exports, "replaceAccentedChars", { enumerable: true, get: function () { return Preprocessors_1.replaceAccentedChars; } });
+    Object.defineProperty(exports, "separateLetterFromNumber", { enumerable: true, get: function () { return Preprocessors_1.separateLetterFromNumber; } });
+    Object.defineProperty(exports, "shortenRepeatedChars", { enumerable: true, get: function () { return Preprocessors_1.shortenRepeatedChars; } });
+    Object.defineProperty(exports, "trimWhitespace", { enumerable: true, get: function () { return Preprocessors_1.trimWhitespace; } });
+    Object.defineProperty(exports, "urlToPlaceholder", { enumerable: true, get: function () { return Preprocessors_1.urlToPlaceholder; } });
 });
 //# sourceMappingURL=index.js.map
