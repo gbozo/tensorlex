@@ -2,7 +2,7 @@
   "name": "tensorlex",
   "version": "1.0.0",
   "description": "Advanced Textual Analysis & Matching using Deep Learning",
-  "main": "Tensorlex.ts",
+  "main": "index.js",
   "type": "module",  
   "keywords": [
     "string",
