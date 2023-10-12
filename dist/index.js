@@ -1,0 +1,3 @@
+export { saveModel, loadModel, cosineSimilarity, createEmbeddingModel, predictMatches, trainModel } from './Tensorlex';
+export { bulkPreprocess, chainPreprocessors, convertToLowercase, expandAbbreviations, expandNumbers, numberToWords, removeConsecutiveSpaces, removeEmails, removeNonASCII, removeNumbers, removeSpecialCharacters, replaceAccentedChars, separateLetterFromNumber, shortenRepeatedChars, trimWhitespace, urlToPlaceholder } from './Preprocessors';
+//# sourceMappingURL=index.js.map

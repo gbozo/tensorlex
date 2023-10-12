@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "Advanced Textual Analysis & Matching using Deep Learning",
   "main": "index.js",
-  "types": "dist/tensorlex-bundle.d.ts",
-  
+  "types": "dist/index.d.ts",  
   "type": "module",  
   "keywords": [
     "string",

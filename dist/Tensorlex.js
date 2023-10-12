@@ -1,27 +1,3 @@
-"use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -31,14 +7,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.trainModel = exports.predictMatches = exports.cosineSimilarity = exports.createEmbeddingModel = exports.loadModel = exports.saveModel = void 0;
-const tf = __importStar(require("@tensorflow/tfjs"));
+import * as tf from '@tensorflow/tfjs';
 const MAX_STRING_LENGTH = 20;
 const VOCAB_SIZE = 128;
 const EMBEDDING_DIM = 8;
 let globalModel = null;
-function saveModel(path) {
+export function saveModel(path) {
     return __awaiter(this, void 0, void 0, function* () {
         if (!globalModel) {
             console.error('No model to save!');
@@ -47,8 +21,7 @@ function saveModel(path) {
         yield globalModel.save(`file://${path}`);
     });
 }
-exports.saveModel = saveModel;
-function loadModel(path) {
+export function loadModel(path) {
     return __awaiter(this, void 0, void 0, function* () {
         const model = yield tf.loadLayersModel(`file://${path}`);
         if (model instanceof tf.Sequential) {
@@ -59,8 +32,7 @@ function loadModel(path) {
         }
     });
 }
-exports.loadModel = loadModel;
-function createEmbeddingModel() {
+export function createEmbeddingModel() {
     const model = tf.sequential();
     model.add(tf.layers.embedding({
         inputDim: VOCAB_SIZE,
@@ -71,7 +43,6 @@ function createEmbeddingModel() {
     model.add(tf.layers.dense({ units: 32, activation: 'relu' }));
     return model;
 }
-exports.createEmbeddingModel = createEmbeddingModel;
 // export function cosineSimilarity(vectors: tf.Tensor[]): tf.Tensor {
 //     const [a, b] = vectors;
 //     const dotProduct = tf.sum(tf.mul(a, b));
@@ -79,15 +50,14 @@ exports.createEmbeddingModel = createEmbeddingModel;
 //     const normB = tf.sqrt(tf.sum(tf.square(b)));
 //     return dotProduct.div(normA.mul(normB));
 // }
-function cosineSimilarity(vectors) {
+export function cosineSimilarity(vectors) {
     const [a, b] = vectors;
     const dotProduct = tf.sum(tf.mul(a, b));
     const normA = tf.sqrt(tf.sum(tf.square(a)));
     const normB = tf.sqrt(tf.sum(tf.square(b)));
     return dotProduct.div(normA.mul(normB));
 }
-exports.cosineSimilarity = cosineSimilarity;
-function predictMatches(query, candidates, cutoffThreshold = 0.75) {
+export function predictMatches(query, candidates, cutoffThreshold = 0.75) {
     return __awaiter(this, void 0, void 0, function* () {
         const embeddingModel = globalModel || createEmbeddingModel();
         const queryEmbedding = embeddingModel.predict(tf.tensor([stringToIntArray(query)]));
@@ -113,7 +83,6 @@ function predictMatches(query, candidates, cutoffThreshold = 0.75) {
         return { matches, nonMatches };
     });
 }
-exports.predictMatches = predictMatches;
 function stringToIntArray(str) {
     const arr = [];
     for (let i = 0; i < str.length; i++) {
@@ -124,7 +93,7 @@ function stringToIntArray(str) {
     }
     return arr;
 }
-function trainModel(data, config = { epochs: 10, batchSize: 2 }) {
+export function trainModel(data, config = { epochs: 10, batchSize: 2 }) {
     const model = createEmbeddingModel();
     globalModel = model;
     const x = data.inputs.map(stringToIntArray);
@@ -141,5 +110,4 @@ function trainModel(data, config = { epochs: 10, batchSize: 2 }) {
         batchSize: config.batchSize
     });
 }
-exports.trainModel = trainModel;
 //# sourceMappingURL=Tensorlex.js.map
