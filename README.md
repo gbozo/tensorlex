@@ -1,6 +1,6 @@
 # tensorlex
 Typescript package - Advanced Textual Analysis &amp; Matching using Deep Learning
-<code>
+```
 // example with load
 import {
     trainModel,
@@ -68,4 +68,4 @@ async function main() {
 
 // Run the main function
 main();
-</code>
+```
