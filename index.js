@@ -1,1 +1,7 @@
-module.exports = require('./dist/tensorlex-bundle.js');
+const tensorlex = require('./dist/Tensorlex.js');
+const preprocessor = require('./dist/Preprocessors.js');
+
+module.exports = {
+    Tensorlex: tensorlex,
+    Preprocessor: preprocessor
+};
