@@ -2,8 +2,8 @@
   "name": "tensorlex",
   "version": "1.0.0",
   "description": "Advanced Textual Analysis & Matching using Deep Learning",
-  "main": "index.js",
-  "types": "dist/index.d.ts",  
+  "main": "dist/Tensorlex.js",
+  "types": "dist/Tensorlex.d.ts",  
   "type": "module",  
   "keywords": [
     "string",
