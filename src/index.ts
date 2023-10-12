@@ -1,2 +1,40 @@
-export {saveModel, loadModel, TensorLexResult, TrainConfig, TrainingData, cosineSimilarity, createEmbeddingModel, predictMatches, trainModel} from './Tensorlex';
-export {Preprocessor,bulkPreprocess,chainPreprocessors,convertToLowercase,expandAbbreviations,expandNumbers,numberToWords,removeConsecutiveSpaces,removeEmails,removeNonASCII,removeNumbers,removeSpecialCharacters,replaceAccentedChars,separateLetterFromNumber,shortenRepeatedChars,trimWhitespace,urlToPlaceholder} from './Preprocessors';
+import {TensorLexResult, TrainConfig, TrainingData, cosineSimilarity, createEmbeddingModel, loadModel, predictMatches, saveModel, trainModel} from './Tensorlex';
+import {
+  Preprocessor,
+  bulkPreprocess,
+  chainPreprocessors,
+  convertToLowercase,
+  expandAbbreviations,
+  expandNumbers,
+  numberToWords,
+  removeConsecutiveSpaces,
+  removeEmails,
+  removeNonASCII,
+  removeNumbers,
+  removeSpecialCharacters,
+  replaceAccentedChars,
+  separateLetterFromNumber,
+  shortenRepeatedChars,
+  trimWhitespace,
+  urlToPlaceholder,
+} from './Preprocessors';
+export {TensorLexResult, TrainConfig, TrainingData, cosineSimilarity, createEmbeddingModel, loadModel, predictMatches, saveModel, trainModel};
+export {
+  Preprocessor,
+  bulkPreprocess,
+  chainPreprocessors,
+  convertToLowercase,
+  expandAbbreviations,
+  expandNumbers,
+  numberToWords,
+  removeConsecutiveSpaces,
+  removeEmails,
+  removeNonASCII,
+  removeNumbers,
+  removeSpecialCharacters,
+  replaceAccentedChars,
+  separateLetterFromNumber,
+  shortenRepeatedChars,
+  trimWhitespace,
+  urlToPlaceholder,
+};
