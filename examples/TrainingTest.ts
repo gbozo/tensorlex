@@ -1,5 +1,4 @@
-import { predictMatches, trainModel } from "../dist/Tensorlex";
-import {bulkPreprocess, chainPreprocessors, convertToLowercase, removeConsecutiveSpaces, removeNonASCII } from "../dist/Preprocessors";
+import { predictMatches, trainModel , bulkPreprocess, chainPreprocessors, convertToLowercase, removeConsecutiveSpaces, removeNonASCII } from "../dist/Tensorlex";
 
 // Training
 const trainingData = {
