@@ -7,15 +7,13 @@ import {
     predictMatches,
     saveModel,
     loadModel,
-    TrainingData
-} from'../dist/Tensorlex';  // Adjust path based on your setup
-import {
+    TrainingData,
     chainPreprocessors,
     bulkPreprocess,
     removeNonASCII,
     removeConsecutiveSpaces,
     convertToLowercase,
-} from'../dist/Preprocessors';  // Adjust path based on your setup
+} from'tensorlex';  // Adjust path based on your setup
 
 
 // Define preprocessors
